@@ -1,7 +1,7 @@
 {
-  "name": "angular-webpack-workflow",
-  "version": "1.1.0",
-  "description": "A workflow for Angular made with Webpack",
+  "name": "to-do-list-demo",
+  "version": "1.0.0",
+  "description": "",
   "scripts": {
     "build": "rimraf dist && webpack --bail --progress --profile",
     "server": "webpack-dev-server --history-api-fallback --inline --progress",
@@ -9,18 +9,11 @@
     "test-watch": "karma start --auto-watch --no-single-run",
     "start": "npm run server"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/preboot/angularjs-webpack.git"
-  },
-  "author": "Jesus Rodriguez",
+  "author": "Santana",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/preboot/angularjs-webpack/issues"
-  },
-  "homepage": "https://github.com/preboot/angularjs-webpack",
   "dependencies": {
-    "angular": "^1.5.0"
+    "angular": "^1.5.0",
+    "angular-route": "^1.6.4"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.0",
