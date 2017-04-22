@@ -1,7 +1,12 @@
 import angular from 'angular';
+import angularRoute from 'angular-route';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../style/app.css';
+import '../style/app.scss';
+
+//import components
+import {LoginCtrl, loginComponent} from '../login/login.js';
+
 
 let app = () => {
   return {
@@ -19,8 +24,26 @@ class AppCtrl {
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, [])
+let appModule = angular.module(MODULE_NAME, ['ngRoute']);
+
+// import login
+appModule
+    .directive('login', loginComponent)
+    .controller('LoginCtrl', LoginCtrl);
+
+
+appModule
   .directive('app', app)
-  .controller('AppCtrl', AppCtrl);
+  .controller('AppCtrl', AppCtrl)
+  .config(function($routeProvider) {
+    $routeProvider
+      .when('/login', {
+        template: require('../login/login.html'),
+      })
+      .otherwise({
+        redirectTo: '/login'
+      });
+  });
+
 
 export default MODULE_NAME;
