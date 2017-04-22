@@ -6,6 +6,7 @@ var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 /**
  * Env
@@ -219,6 +220,26 @@ module.exports = function makeWebpackConfig() {
     contentBase: './src/public',
     stats: 'minimal'
   };
+
+  //enable scss
+  const extractSass = new ExtractTextPlugin({
+      filename: "[name].[contenthash].css",
+      disable: process.env.NODE_ENV === "development"
+  });
+  config.plugins.push(extractSass);
+
+  config.module.rules.push({
+    test: /\.scss$/,
+    use: extractSass.extract({
+        use: [{
+            loader: "css-loader"
+        }, {
+            loader: "sass-loader"
+        }],
+        // use style-loader in development
+        fallback: "style-loader"
+    })
+  });
 
   return config;
 }();
