@@ -29,10 +29,6 @@ class TodosCtrl {
     $scope.addTodo = this.addTodo.bind(this);
     $scope.updatedTodoToServer = this.updatedTodoToServer.bind(this);
 
-    this.$scope.todosList.forEach(function(todo){
-      this.reactTodoPriority(todo);
-    }.bind(this));
-
     this.loadTodosFromServer();
   }
 
@@ -44,6 +40,7 @@ class TodosCtrl {
       set: function(value) {
         this._priority = value;
         self.ordenateTodos();
+        console.log("change");
       }
     });
   }
@@ -69,6 +66,11 @@ class TodosCtrl {
     }).then(function successCallback(response) {
         this.$scope.todosList = response.data;
         this.ordenateTodos();
+
+        this.$scope.todosList.forEach(function(todo){
+          this.reactTodoPriority(todo);
+        }.bind(this));
+
         end(response);
 
         if(Config.debug) console.log("loaded todos");
@@ -96,12 +98,12 @@ class TodosCtrl {
         priority: todo.priority
       }
     }).then(function successCallback(response) {
-        callback && callback(true);
+        callback && callback(true, response.data);
         end(response);
         if(Config.debug) console.log("add to-do to server", todo, response);
       }.bind(this), function errorCallback(response) {
         if(Config.debug) console.log("error to add todo to server.", todo);
-        callback && callback(false);
+        callback && callback(false, response.data);
         end(response);
       }.bind(this));
   }
@@ -210,7 +212,13 @@ class TodosCtrl {
     this.ordenateTodos();
 
     //TODO: show feedback when error
-    this.addTodoToServer(todo);
+    this.addTodoToServer(todo, function(result, data){
+      if(result){
+        for(var key in data){
+          todo[key] = data[key];
+        }
+      }
+    });
   }
 
   onClickPriority(todo){
