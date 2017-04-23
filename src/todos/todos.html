@@ -1,5 +1,5 @@
 <div class="todos" ng-controller="TodosCtrl as controller">
-  <div class="message-empty" ng-if="todosList.length == 0">
+  <div class="message-empty" ng-if="todosList.length == 0 && !Loading.busy">
     Nossa, que tédio, sem nada pra fazer... <br>
     Preencha os campos abaixos
     para adicionar alguma coisa divertida na sua lista de afazeres!
@@ -8,7 +8,7 @@
     <div class="todo" ng-repeat="todo in todosList">
       <div class="checkbox todo-content">
         <label ng-class="{ 'todo-done': todo.done  }">
-          <input type="checkbox" ng-model="todo.done">
+          <input type="checkbox" ng-model="todo.done" ng-click="updatedTodoToServer(todo)">
           {{ todo.description }}
         </label>
       </div>

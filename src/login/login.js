@@ -14,11 +14,11 @@ let loginComponent = () => {
 var successLoginUrl = '/todos';
 
 class LoginCtrl {
-  constructor($scope, $cookies, $http, $location, Loading) {
+  constructor($scope, $cookies, $http, $location, Loading, Auth) {
     this.$scope = $scope;
-    this.$cookies = $cookies;
     this.$http = $http;
     this.$location = $location;
+    this.Auth = Auth;
 
     $scope.successLogin = undefined;
     this.$scope.Loading = Loading;
@@ -42,7 +42,7 @@ class LoginCtrl {
         password: this.password
       }
     }).then(function successCallback(response) {
-        this.$cookies.put(Config.cookies.TOKEN, response.data.token);
+        this.Auth.setToken(response.data.token);
         this.$location.url(successLoginUrl);
         this.$scope.successLogin = true;
         end(response);

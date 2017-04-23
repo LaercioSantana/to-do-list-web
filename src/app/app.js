@@ -85,14 +85,17 @@ appModule
 
 appModule
   .factory('Auth', ['$cookies', '$http', function($cookies, $http){
-    var token;
+    var token = $cookies.get(Config.cookies.TOKEN);
 
     return{
       setToken : function(t){
         token = t;
+        $cookies.put(Config.cookies.TOKEN, token);
+      },
+      getToken: function(){
+        return token;
       },
       isAuthorized: function(callback){
-        var token = $cookies.get("token");
         callback = callback || function(){};
 
         if(token)

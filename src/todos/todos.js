@@ -13,8 +13,10 @@ let todosComponent = () => {
 var priorityColors = ['black', 'red'];
 
 class TodosCtrl {
-  constructor($scope) {
+  constructor($scope, $http, Auth) {
     this.$scope = $scope;
+    this.$http = $http;
+    this.Auth = Auth;
     this.$scope.todosList = [];
     this.$scope.priority = "0";
     this.$scope.description = "";
@@ -23,12 +25,13 @@ class TodosCtrl {
     $scope.priorityIconStyle = this.priorityIconStyle.bind(this);
     $scope.removeTodo = this.removeTodo.bind(this);
     $scope.addTodo = this.addTodo.bind(this);
+    $scope.updatedTodoToServer = this.updatedTodoToServer.bind(this);
 
     this.$scope.todosList.forEach(function(todo){
       this.reactTodoPriority(todo);
     }.bind(this));
 
-    this.ordenateTodos();
+    this.loadTodosFromServer();
   }
 
   reactTodoPriority(todo){
@@ -41,6 +44,117 @@ class TodosCtrl {
         self.ordenateTodos();
       }
     });
+  }
+
+  loadTodosFromServer(){
+    var end = function(response){
+      this.$scope.Loading.busy = false;
+    }.bind(this);
+
+    this.$scope.Loading.busy = true;
+    this.$http({
+      method: 'GET',
+      url: Config.api.rootUrl + '/users/todos',
+      headers: {
+        'Content-Type': 'application/json',
+        'Token': this.Auth.getToken()
+      },
+      data: {
+        full_name: this.$scope.name,
+        email: this.$scope.email,
+        password: this.$scope.password
+      }
+    }).then(function successCallback(response) {
+        this.$scope.todosList = response.data;
+        this.ordenateTodos();
+        end(response);
+
+        if(Config.debug) console.log("loaded todos");
+      }.bind(this), function errorCallback(response) {
+        end(response);
+      }.bind(this));
+  }
+
+  addTodoToServer(todo, callback){
+    var end = function(response){
+      this.$scope.Loading.busy = false;
+    }.bind(this);
+
+    this.$scope.Loading.busy = true;
+    this.$http({
+      method: 'POST',
+      url: Config.api.rootUrl + '/users/todos',
+      headers: {
+        'Content-Type': 'application/json',
+        'Token': this.Auth.getToken()
+      },
+      data: {
+        description: todo.description,
+        done: todo.done,
+        priority: todo.priority
+      }
+    }).then(function successCallback(response) {
+        callback && callback(true);
+        end(response);
+        if(Config.debug) console.log("add to-do to server", todo, response);
+      }.bind(this), function errorCallback(response) {
+        if(Config.debug) console.log("error to add todo to server.", todo);
+        callback && callback(false);
+        end(response);
+      }.bind(this));
+  }
+
+  removeTodoFromServer(todo, callback){
+    var end = function(response){
+      this.$scope.Loading.busy = false;
+    }.bind(this);
+
+    this.$scope.Loading.busy = true;
+    this.$http({
+      method: 'DELETE',
+      url: Config.api.rootUrl + '/users/todos/'+todo.id,
+      headers: {
+        'Content-Type': 'application/json',
+        'Token': this.Auth.getToken()
+      }
+    }).then(function successCallback(response) {
+        callback && callback(true);
+        end(response);
+        if(Config.debug) console.log("removed to-do from server", todo, response);
+      }.bind(this), function errorCallback(response) {
+        if(Config.debug) console.log("error to remove todo from server.", todo);
+        callback && callback(false);
+        end(response);
+      }.bind(this));
+  }
+
+  updatedTodoToServer(todo, callback){
+    var end = function(response){
+      this.$scope.Loading.busy = false;
+    }.bind(this);
+
+    this.$scope.Loading.busy = true;
+    this.$http({
+      method: 'PUT',
+      url: Config.api.rootUrl + '/users/todos/'+todo.id,
+      headers: {
+        'Content-Type': 'application/json',
+        'Token': this.Auth.getToken()
+      },
+      data: {
+        description: todo.description,
+        done: todo.done,
+        priority: todo.priority
+      }
+    }).then(function successCallback(response) {
+        callback && callback(true);
+        end(response);
+        if(Config.debug) console.log("updated to-do to server", todo, response);
+      }.bind(this), function errorCallback(response) {
+        if(Config.debug) console.log("error to updated todo to server.", todo);
+        callback && callback(false);
+        end(response);
+      }.bind(this));
   }
 
   ordenateTodos(){
@@ -76,27 +190,31 @@ class TodosCtrl {
 
     if(i !== undefined)
       this.$scope.todosList.splice(i, 1);
+
+    //TODO: show feedback when error
+    this.removeTodoFromServer(todo);
   }
 
   addTodo(){
     var todo = {
-        "done": false,
-        "description": this.$scope.description,
-        "priority": parseInt(this.$scope.priority) || 0,
+      "done": false,
+      "description": this.$scope.description,
+      "priority": parseInt(this.$scope.priority) || 0,
     };
-
-    console.log(this.$scope.priority || 0);
 
     this.reactTodoPriority(todo);
     this.$scope.todosList.push(todo);
     this.$scope.description = "";
-    console.log(this.$scope.todosList);
     this.ordenateTodos();
-    console.log(this.$scope.todosList);
+
+    //TODO: show feedback when error
+    this.addTodoToServer(todo);
   }
 
   onClickPriority(todo){
    todo.priority = !todo.priority + 0;
+   //TODO: show feedback when error
+   this.updatedTodoToServer(todo)
   }
 
   priorityIconStyle(todo){
