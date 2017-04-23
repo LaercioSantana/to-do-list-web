@@ -11,10 +11,13 @@ let signupComponent = () => {
 };
 
 class SignupCtrl {
-  constructor() {
-    this.register = function(){
-      console.log(this.name, this.email, this.password);
-    }
+  constructor($scope, $cookies, $http, $location) {
+    this.$scope = $scope;
+    this.$cookies = $cookies;
+    this.$http = $http;
+    this.$location = $location;
+
+
   }
 }
 

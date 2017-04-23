@@ -1,32 +1,36 @@
 <div class="signup" ng-controller="SignupCtrl as signup">
-  <form class="form-horizontal">
+  <form name="signupForm" class="form-horizontal">
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error' : signupForm.name.$invalid && !signupForm.name.$pristine }">
       <label for="inputName" class="col-sm-2 control-label">Nome</label>
       <div class="col-sm-9 col-sm-offset-1">
-        <input ng-model="signup.name" name="name" type="text" class="form-control" id="inputName" placeholder="Nome">
+        <input ng-model="signup.name" name="name" type="text" class="form-control" placeholder="Nome" required>
+        <p ng-show="signupForm.name.$invalid && !signupForm.name.$pristine" class="help-block">Seu nome é obrigatório.</p>
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error' : signupForm.email.$invalid && !signupForm.email.$pristine }">
       <label for="inputEmail" class="col-sm-2 control-label">Email</label>
       <div class="col-sm-9 col-sm-offset-1">
-        <input ng-model="signup.email" name="email" type="text" class="form-control" id="inputEmail" placeholder="Email">
+        <input ng-model="signup.email" name="email" type="email" class="form-control" placeholder="Email" required>
+        <p ng-show="signupForm.email.$invalid && !signupForm.email.$pristine" class="help-block">Insira um email válido.</p>
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error' : signupForm.password.$invalid && !signupForm.password.$pristine }">
       <label for="inputPassword" class="col-sm-2 control-label">Senha</label>
       <div class="col-sm-9 col-sm-offset-1">
-        <input ng-model="signup.password" type="password" class="form-control" id="inputPassword" placeholder="Senha">
+        <input ng-model="signup.password" name="password" type="password" class="form-control" placeholder="Senha" ng-minlength="4" required>
+        <p ng-show="signupForm.password.$error.minlength" class="help-block">A senha deve possuir no mínimo 4 dígitos</p>
+        <p ng-show="signupForm.password.$error.required && signupForm.password.$dirty" class="help-block">Digite uma senha.</p>
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-8">
+        <input class="btn btn-primary full" type="button" value="Criar conta" ng-click="signup.register()" type="submit">
+      </div>
+    </div>
   </form>
 
-  <div class="row">
-    <div class="col-sm-4 col-sm-offset-8">
-      <input class="btn btn-primary full" type="button" value="Criar conta" ng-click="signup.register()">
-    </div>
-  </div>
 </div>
