@@ -22,11 +22,12 @@ var HTTP_STATUS = {
 var successLoginUrl = '/todos';
 
 class SignupCtrl {
-  constructor($scope, $cookies, $http, $location, Loading) {
+  constructor($scope, $cookies, $http, $location, Loading, Auth) {
     this.$scope = $scope;
     this.$cookies = $cookies;
     this.$http = $http;
     this.$location = $location;
+    this.Auth = Auth;
     this.$scope.Loading = Loading;
 
     this.$scope.register = this.register.bind(this);
@@ -56,7 +57,7 @@ class SignupCtrl {
         }
       }).then(function successCallback(response) {
         if(Config.debug) console.log("create success");
-          this.$cookies.put(Config.cookies.TOKEN, response.data.token);
+          this.Auth.setToken(response.data.token);
           this.$location.url(successLoginUrl);
           end(response);
         }.bind(this), function errorCallback(response) {
