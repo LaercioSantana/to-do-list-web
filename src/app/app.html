@@ -1,7 +1,9 @@
 <div class="app">
   <main>
     <h2 class="title"> To-do List </h2>
-    <div class="loading-spinner glyphicon glyphicon-repeat" ng-show="Loading.busy"></div>
+    <div class="loading-spinner-wrapper">
+      <div class="loading-spinner glyphicon glyphicon-repeat" ng-show="Loading.busy"></div>
+    </div>
     <div ng-view ></div>
   </main>
   <footer>
