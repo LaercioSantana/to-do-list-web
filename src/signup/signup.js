@@ -22,11 +22,12 @@ var HTTP_STATUS = {
 var successLoginUrl = '/todos';
 
 class SignupCtrl {
-  constructor($scope, $cookies, $http, $location) {
+  constructor($scope, $cookies, $http, $location, Loading) {
     this.$scope = $scope;
     this.$cookies = $cookies;
     this.$http = $http;
     this.$location = $location;
+    this.$scope.Loading = Loading;
 
     this.$scope.register = this.register.bind(this);
 
@@ -37,11 +38,11 @@ class SignupCtrl {
   register(){
     var end = function(response){
       this.$scope.createStatus = response.status;
-      this.$scope.loadingRequest = false;
+      this.$scope.Loading.busy = false;
     }.bind(this);
 
     if(!this.$scope.signupForm.$invalid){
-      this.$scope.loadingRequest = true;
+      this.$scope.Loading.busy = true;
       this.$http({
         method: 'POST',
         url: Config.api.rootUrl + '/users',

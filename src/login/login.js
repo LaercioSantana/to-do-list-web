@@ -14,17 +14,23 @@ let loginComponent = () => {
 var successLoginUrl = '/todos';
 
 class LoginCtrl {
-  constructor($scope, $cookies, $http, $location) {
+  constructor($scope, $cookies, $http, $location, Loading) {
     this.$scope = $scope;
     this.$cookies = $cookies;
     this.$http = $http;
     this.$location = $location;
 
     $scope.successLogin = undefined;
+    this.$scope.Loading = Loading;
   }
 
   login(){
-    this.$scope.loadingRequest = true;
+
+    var end = function(response){
+      this.$scope.Loading.busy = false;
+    }.bind(this);
+
+    this.$scope.Loading.busy = true;
     this.$http({
       method: 'POST',
       url: Config.api.rootUrl + '/users/tokens/get',
@@ -39,12 +45,12 @@ class LoginCtrl {
         this.$cookies.put(Config.cookies.TOKEN, response.data.token);
         this.$location.url(successLoginUrl);
         this.$scope.successLogin = true;
-        this.$scope.loadingRequest = false;
+        end(response);
         if(Config.debug) console.log("login success");
       }.bind(this), function errorCallback(response) {
-        this.$scope.successLogin = false;
-        this.$scope.loadingRequest = false;
         if(Config.debug) console.log("login error");
+        this.$scope.successLogin = false;
+        end(response);
       }.bind(this));
 
     if(Config.debug) console.log(this.email, this.password);

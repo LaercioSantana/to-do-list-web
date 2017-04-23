@@ -20,7 +20,9 @@ let app = () => {
 };
 
 class AppCtrl {
-  constructor() {
+  constructor($scope, Loading) {
+    this.$scope = $scope;
+    $scope.Loading = Loading;
     this.url = 'https://github.com/preboot/angular-webpack';
   }
 }
@@ -113,6 +115,13 @@ appModule
       }
     }
   }]);
+
+  appModule
+    .factory('Loading', function(){
+      return{
+        busy: false
+      };
+    });
 
 
 export default MODULE_NAME;

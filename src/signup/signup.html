@@ -1,7 +1,6 @@
 <div class="signup" ng-controller="SignupCtrl as signup">
   <form name="signupForm" class="form-horizontal">
-    <div class="loading-spinner glyphicon glyphicon-repeat" ng-show="loadingRequest"></div>
-    <div ng-show="!loadingRequest">
+    <div ng-show="!Loading.busy">
       <p class="bg-danger" ng-show="createStatus == STATUS.BAD_REQUEST || createStatus == STATUS.INTERNAL_ERROR">
         <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
         Ocoreu um erro com a comunicação com o servidor. Por favor contate o admistrador do sistema: error {{ createStatus }}.

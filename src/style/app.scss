@@ -90,9 +90,14 @@ p.bg-danger{
   }
 
   .loading-spinner{
+    $space-v: 0.5em;
     width: 100%;
     text-align: center;
     font-size: 20px;
+    position: relative;
+    top: -$space-v;
+    margin-top: -$space-v;
+    margin-bottom: $space-v;
 
     @keyframes rotate {
       from {
