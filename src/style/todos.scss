@@ -1,0 +1,73 @@
+.todos{
+  font-size: 16px;
+
+  .message-empty{
+    color: #777;
+    text-align: center;
+    margin-bottom: 2em;
+  }
+
+  .todos-list{
+    overflow-y: hidden;
+
+    .todo{
+      padding: 5px;
+      border-bottom: solid #AAA 1px;
+      display: flex;
+
+      &:hover{
+        background: rgba(0, 0, 0, 0.05)
+      }
+
+      &:last-of-type{
+        border-bottom: none;
+      }
+
+      .todo-done{
+        text-decoration: line-through;
+        color: #888;
+      }
+
+      .todo-content{
+        width: 90%;
+        margin: 0px;
+        text-align: justify;
+      }
+
+      .right-bar{
+        text-align: right;
+
+        > .item{
+          cursor: pointer;
+        }
+      }
+
+      .todo-content,
+      .right-bar{
+        flex: 1 1 auto;
+      }
+    }
+  }
+
+  .region-insertion{
+    $fix-margin: 0.9em;
+    border-top: solid #AAA 2px;
+    margin-left: -$fix-margin;
+    padding-left: $fix-margin;
+    padding-right: $fix-margin;
+    margin-right: -$fix-margin;
+
+    .title{
+      text-align: center;
+    }
+
+    .description{
+      width: 100%;
+      resize: none;
+    }
+
+    .priority-selector{
+      display: inline-block;
+    }
+  }
+}

@@ -15,6 +15,23 @@ a {
   border-color: $primary-color + 10;
 }
 
+.btn-empty{
+  background: none;
+  color: $primary-color;
+  padding: 0px;
+  font-weight: bold;
+
+  &:focus,
+  &:hover {
+    color: $primary-color;
+    text-decoration: none;
+  }
+}
+
+.center-text{
+  text-align: center;
+}
+
 .row-eq-height {
   display: -webkit-box;
   display: -webkit-flex;

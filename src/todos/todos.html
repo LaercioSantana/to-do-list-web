@@ -1,3 +1,43 @@
-<div class="login" ng-controller="TodosCtrl as controller">
-  to-dos devem ficar aq
+<div class="todos" ng-controller="TodosCtrl as controller">
+  <div class="message-empty" ng-if="todosList.length == 0">
+    Nossa, que tédio, sem nada pra fazer... <br>
+    Preencha os campos abaixos
+    para adicionar alguma coisa divertida na sua lista de afazeres!
+  </div>
+  <div class="todos-list" ng-else>
+    <div class="todo" ng-repeat="todo in todosList">
+      <div class="checkbox todo-content">
+        <label ng-class="{ 'todo-done': todo.done  }">
+          <input type="checkbox" ng-model="todo.done">
+          {{ todo.description }}
+        </label>
+      </div>
+      <div class="right-bar">
+        <span class="glyphicon glyphicon-chevron-up item" aria-hidden="true" ng-style="priorityIconStyle(todo)" ng-click="onClickPriority(todo)"></span>
+        <span class="glyphicon glyphicon-remove item" aria-hidden="true" ng-click="removeTodo(todo)"></span>
+      </div>
+    </div>
+  </div>
+  <div class="region-insertion">
+    <h4 class="title">Inserir a fazer:</h4>
+    <div class="inputs">
+      <textarea ng-model="description" class="description" name="textarea" rows="3" cols="10"></textarea>
+    </div>
+
+    Prioridade:
+    <div class="radio priority-selector">
+      <label>
+        <input type="radio" name="priority" value="0" data-ng-model="priority" checked> Normal
+      </label>
+      <label>
+        <input type="radio" name="priority" value="1" data-ng-model="priority"> Alta
+      </label>
+    </div>
+
+    <div class="row center-text">
+      <button class="btn btn-empty btn-lg" type="button" ng-click="addTodo()" ng-if="description">
+        ADICIONAR
+      </button>
+    </div>
+  </div>
 </div>
