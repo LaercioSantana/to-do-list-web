@@ -1,10 +1,18 @@
 <div class="signup" ng-controller="SignupCtrl as signup">
   <form name="signupForm" class="form-horizontal">
+    <p class="bg-danger" ng-show="createStatus == STATUS.BAD_REQUEST || createStatus == STATUS.INTERNAL_ERROR">
+      <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+        Ocoreu um erro com a comunicação com o servidor. Por favor contate o admistrador do sistema: error {{ createStatus }}.
+    </p>
+    <p class="bg-danger" ng-show="createStatus == STATUS.CONFLICT">
+      <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+        Email já cadastrado. <a href="#!/login"> Entre aqui. </a>
+    </p>
 
     <div class="form-group" ng-class="{ 'has-error' : signupForm.name.$invalid && !signupForm.name.$pristine }">
       <label for="inputName" class="col-sm-2 control-label">Nome</label>
       <div class="col-sm-9 col-sm-offset-1">
-        <input ng-model="signup.name" name="name" type="text" class="form-control" placeholder="Nome" required>
+        <input ng-model="name" name="name" type="text" class="form-control" placeholder="Nome" required>
         <p ng-show="signupForm.name.$invalid && !signupForm.name.$pristine" class="help-block">Seu nome é obrigatório.</p>
       </div>
     </div>
@@ -12,7 +20,7 @@
     <div class="form-group" ng-class="{ 'has-error' : signupForm.email.$invalid && !signupForm.email.$pristine }">
       <label for="inputEmail" class="col-sm-2 control-label">Email</label>
       <div class="col-sm-9 col-sm-offset-1">
-        <input ng-model="signup.email" name="email" type="email" class="form-control" placeholder="Email" required>
+        <input ng-model="email" name="email" type="email" class="form-control" placeholder="Email" required>
         <p ng-show="signupForm.email.$invalid && !signupForm.email.$pristine" class="help-block">Insira um email válido.</p>
       </div>
     </div>
@@ -20,7 +28,7 @@
     <div class="form-group" ng-class="{ 'has-error' : signupForm.password.$invalid && !signupForm.password.$pristine }">
       <label for="inputPassword" class="col-sm-2 control-label">Senha</label>
       <div class="col-sm-9 col-sm-offset-1">
-        <input ng-model="signup.password" name="password" type="password" class="form-control" placeholder="Senha" ng-minlength="4" required>
+        <input ng-model="password" name="password" type="password" class="form-control" placeholder="Senha" ng-minlength="4" required>
         <p ng-show="signupForm.password.$error.minlength" class="help-block">A senha deve possuir no mínimo 4 dígitos</p>
         <p ng-show="signupForm.password.$error.required && signupForm.password.$dirty" class="help-block">Digite uma senha.</p>
       </div>
@@ -28,7 +36,7 @@
 
     <div class="row">
       <div class="col-sm-4 col-sm-offset-8">
-        <input class="btn btn-primary full" type="button" value="Criar conta" ng-click="signup.register()" type="submit">
+        <input class="btn btn-primary full" type="button" value="Criar conta" ng-click="register()" type="submit" ng-disabled="signupForm.$invalid">
       </div>
     </div>
   </form>
