@@ -28,6 +28,17 @@ a {
   }
 }
 
+p[class^="bg-"]{
+  padding: 0.5em;
+  border: solid 1px;
+  font-size: 0.9em;
+  border-radius: 2px;
+}
+
+p.bg-danger{
+  border-color: #800000;
+}
+
 .center-text{
   text-align: center;
 }

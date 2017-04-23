@@ -14,10 +14,13 @@ let loginComponent = () => {
 var successLoginUrl = '/todos';
 
 class LoginCtrl {
-  constructor($cookies, $http, $location) {
+  constructor($scope, $cookies, $http, $location) {
+    this.$scope = $scope;
     this.$cookies = $cookies;
     this.$http = $http;
     this.$location = $location;
+
+    $scope.successLogin = undefined;
   }
 
   login(){
@@ -34,19 +37,15 @@ class LoginCtrl {
     }).then(function successCallback(response) {
         this.$cookies.put(Config.cookies.TOKEN, response.data.token);
         this.$location.url(successLoginUrl);
+        this.$scope.successLogin = true;
         if(Config.debug) console.log("login success");
       }.bind(this), function errorCallback(response) {
-        this.onUnauthorizedLogin();
+        this.$scope.successLogin = false;
         if(Config.debug) console.log("login error");
       }.bind(this));
 
     if(Config.debug) console.log(this.email, this.password);
   }
-
-  onUnauthorizedLogin(){
-    if(Config.debug) console.log('Usuario invalido');
-  }
-
 }
 
 export { LoginCtrl, loginComponent };

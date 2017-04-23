@@ -1,10 +1,13 @@
 <div class="login" ng-controller="LoginCtrl as login">
-  <form class="form-horizontal">
-
+  <form name="loginform" class="form-horizontal">
+    <p class="bg-danger" ng-show="successLogin === false">
+      <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+      Alguns dados informados estão incorretos. Tente novamente.
+    </p>
     <div class="form-group">
       <label for="inputEmail" class="col-sm-2 control-label">Email</label>
       <div class="col-sm-9 col-sm-offset-1">
-        <input ng-model="login.email" type="text" class="form-control" id="inputEmail" placeholder="Email">
+        <input ng-model="login.email" name="email" type="text" class="form-control" id="inputEmail" placeholder="Email">
       </div>
     </div>
 
@@ -14,14 +17,14 @@
         <input ng-model="login.password" type="password" class="form-control" id="inputPassword" placeholder="Senha">
       </div>
     </div>
-  </form>
 
-  <div class="row row-eq-height">
-    <div class="col-sm-8">
-      <span class="to-signup">É sua primeira vez? <a href="#!/signup">Inicie aqui.</a></span>
+    <div class="row row-eq-height">
+      <div class="col-sm-8">
+        <span class="to-signup">É sua primeira vez? <a href="#!/signup">Inicie aqui.</a></span>
+      </div>
+      <div class="col-sm-4">
+        <input class="btn btn-primary full" value="Entrar" ng-click="login.login()" type="submit">
+      </div>
     </div>
-    <div class="col-sm-4">
-      <input class="btn btn-primary full" type="button" value="Entrar" ng-click="login.login()">
-    </div>
-  </div>
+  </form>
 </div>
