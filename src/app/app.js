@@ -27,7 +27,7 @@ class AppCtrl {
     $scope.AppTodo = AppTodo;
     $scope.AppTodo.showExit = false;
     this.Auth = Auth;
-    this.url = 'https://github.com/preboot/angular-webpack';
+    this.url = Config.github.url;
 
     $scope.logout = this.logout.bind(this);
   }
