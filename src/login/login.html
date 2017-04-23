@@ -1,6 +1,7 @@
 <div class="login" ng-controller="LoginCtrl as login">
   <form name="loginform" class="form-horizontal">
-    <p class="bg-danger" ng-show="successLogin === false">
+    <div class="loading-spinner glyphicon glyphicon-repeat" ng-show="loadingRequest"></div>
+    <p class="bg-danger" ng-show="successLogin === false && !loadingRequest">
       <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
       Alguns dados informados estão incorretos. Tente novamente.
     </p>
@@ -23,7 +24,7 @@
         <span class="to-signup">É sua primeira vez? <a href="#!/signup">Inicie aqui.</a></span>
       </div>
       <div class="col-sm-4">
-        <input class="btn btn-primary full" value="Entrar" ng-click="login.login()" type="submit">
+        <input class="btn btn-primary full" value="Entrar" ng-click="login.login()" type="submit" ng-disabled="loadingRequest">
       </div>
     </div>
   </form>

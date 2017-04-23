@@ -1,13 +1,16 @@
 <div class="signup" ng-controller="SignupCtrl as signup">
   <form name="signupForm" class="form-horizontal">
-    <p class="bg-danger" ng-show="createStatus == STATUS.BAD_REQUEST || createStatus == STATUS.INTERNAL_ERROR">
-      <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+    <div class="loading-spinner glyphicon glyphicon-repeat" ng-show="loadingRequest"></div>
+    <div ng-show="!loadingRequest">
+      <p class="bg-danger" ng-show="createStatus == STATUS.BAD_REQUEST || createStatus == STATUS.INTERNAL_ERROR">
+        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
         Ocoreu um erro com a comunicação com o servidor. Por favor contate o admistrador do sistema: error {{ createStatus }}.
-    </p>
-    <p class="bg-danger" ng-show="createStatus == STATUS.CONFLICT">
-      <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+      </p>
+      <p class="bg-danger" ng-show="createStatus == STATUS.CONFLICT">
+        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
         Email já cadastrado. <a href="#!/login"> Entre aqui. </a>
-    </p>
+      </p>
+    </div>
 
     <div class="form-group" ng-class="{ 'has-error' : signupForm.name.$invalid && !signupForm.name.$pristine }">
       <label for="inputName" class="col-sm-2 control-label">Nome</label>
@@ -34,8 +37,11 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-sm-4 col-sm-offset-8">
+    <div class="row row-eq-height">
+      <div class="col-sm-8">
+        <span class="to-login">Já possui uma conta? <a href="#!/login">Entre aqui.</a></span>
+      </div>
+      <div class="col-sm-4">
         <input class="btn btn-primary full" type="button" value="Criar conta" ng-click="register()" type="submit" ng-disabled="signupForm.$invalid">
       </div>
     </div>

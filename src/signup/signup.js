@@ -35,7 +35,13 @@ class SignupCtrl {
   }
 
   register(){
+    var end = function(response){
+      this.$scope.createStatus = response.status;
+      this.$scope.loadingRequest = false;
+    }.bind(this);
+
     if(!this.$scope.signupForm.$invalid){
+      this.$scope.loadingRequest = true;
       this.$http({
         method: 'POST',
         url: Config.api.rootUrl + '/users',
@@ -50,12 +56,12 @@ class SignupCtrl {
       }).then(function successCallback(response) {
         if(Config.debug) console.log("create success");
           this.$cookies.put(Config.cookies.TOKEN, response.data.token);
-          this.$scope.createStatus = 200;
           this.$location.url(successLoginUrl);
+          end(response);
         }.bind(this), function errorCallback(response) {
           if(Config.debug) console.log("create error");
           if(Config.debug) console.log(response)
-          this.$scope.createStatus = response.status;
+          end(response);
         }.bind(this));
     }
   }

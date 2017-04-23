@@ -24,6 +24,7 @@ class LoginCtrl {
   }
 
   login(){
+    this.$scope.loadingRequest = true;
     this.$http({
       method: 'POST',
       url: Config.api.rootUrl + '/users/tokens/get',
@@ -38,9 +39,11 @@ class LoginCtrl {
         this.$cookies.put(Config.cookies.TOKEN, response.data.token);
         this.$location.url(successLoginUrl);
         this.$scope.successLogin = true;
+        this.$scope.loadingRequest = false;
         if(Config.debug) console.log("login success");
       }.bind(this), function errorCallback(response) {
         this.$scope.successLogin = false;
+        this.$scope.loadingRequest = false;
         if(Config.debug) console.log("login error");
       }.bind(this));
 
