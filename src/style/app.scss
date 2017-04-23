@@ -60,6 +60,17 @@ p.bg-danger{
 }
 
 .app{
+  > header{
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    flex-flow: row-reverse;
+
+    > button.exit{
+      padding-right: 5px;
+    }
+  }
+
   > main {
     padding: 1em;
     font-family: Arial, Helvetica, sans-serif;

@@ -1,4 +1,9 @@
 <div class="app">
+  <header>
+    <button title="Sair" class="btn btn-empty btn-lg exit" ng-if="AppTodo.showExit" ng-click="logout()">
+      <span class="glyphicon glyphicon-remove"></span>
+    </button>
+  </header>
   <main>
     <h2 class="title"> To-do List </h2>
     <div class="loading-spinner-wrapper">

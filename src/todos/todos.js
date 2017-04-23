@@ -13,13 +13,15 @@ let todosComponent = () => {
 var priorityColors = ['black', 'red'];
 
 class TodosCtrl {
-  constructor($scope, $http, Auth) {
+  constructor($scope, $http, Auth, AppTodo) {
     this.$scope = $scope;
     this.$http = $http;
     this.Auth = Auth;
     this.$scope.todosList = [];
     this.$scope.priority = "0";
     this.$scope.description = "";
+
+    AppTodo.showExit = true;
 
     $scope.onClickPriority = this.onClickPriority.bind(this);
     $scope.priorityIconStyle = this.priorityIconStyle.bind(this);

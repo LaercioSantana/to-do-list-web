@@ -20,10 +20,21 @@ let app = () => {
 };
 
 class AppCtrl {
-  constructor($scope, Loading) {
+  constructor($scope, $location, Loading, AppTodo, Auth) {
     this.$scope = $scope;
+    this.$location = $location;
     $scope.Loading = Loading;
+    $scope.AppTodo = AppTodo;
+    $scope.AppTodo.showExit = false;
+    this.Auth = Auth;
     this.url = 'https://github.com/preboot/angular-webpack';
+
+    $scope.logout = this.logout.bind(this);
+  }
+
+  logout(){
+    this.Auth.setToken('');
+    this.$location.url('/login');
   }
 }
 
@@ -67,8 +78,9 @@ appModule
 //Authenticate
 var privateRoutes = ['/todos'];
 appModule
-  .run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
+  .run(['$rootScope', '$location', 'Auth', 'AppTodo', function ($rootScope, $location, Auth, AppTodo) {
     $rootScope.$on('$routeChangeStart', function (event) {
+      AppTodo.showExit = false; //reset AppTodo config
 
       if(Config.debug) console.log("routeChangeStart");
         Auth.isAuthorized(function(authorized){
@@ -97,7 +109,7 @@ appModule
       },
       isAuthorized: function(callback){
         callback = callback || function(){};
-
+        console.log("isAuthorized");
         if(token)
           $http({
             method: 'GET',
@@ -125,6 +137,13 @@ appModule
         busy: false
       };
     });
+
+    appModule
+      .factory('AppTodo', function(){
+        return{
+          showExit: true
+        };
+      });
 
 
 export default MODULE_NAME;
