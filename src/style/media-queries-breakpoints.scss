@@ -1,0 +1,20 @@
+$sm-width: 400px;
+$md-width: 1024px;
+
+@mixin xs {
+  @media (max-width: #{$sm-width} - 1px) {
+    @content;
+  }
+}
+
+@mixin sm {
+  @media (min-width: #{$sm-width}) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (min-width: #{$md-width}) {
+    @content;
+  }
+}

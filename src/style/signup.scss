@@ -1,7 +1,11 @@
+@import "./media-queries-breakpoints.scss";
+
 .signup{
   .to-login{
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
+    @include sm{
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+    }
   }
 }
