@@ -1,7 +1,7 @@
 <div class="todos" ng-controller="TodosCtrl as controller">
   <div class="message-empty" ng-if="todosList.length == 0 && !Loading.busy">
     Nossa, que tédio, sem nada pra fazer... <br>
-    Preencha os campos abaixos
+    Preencha os campos abaixo
     para adicionar alguma coisa divertida na sua lista de afazeres!
   </div>
   <div class="todos-list" ng-else>
@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="region-insertion">
-    <h4 class="title">Inserir a fazer:</h4>
+    <h4 class="title">Inserir um afazer:</h4>
     <div class="inputs">
       <textarea ng-model="description" class="description" name="textarea" rows="3" cols="10"></textarea>
     </div>
