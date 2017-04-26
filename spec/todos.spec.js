@@ -1,9 +1,11 @@
 /*
+  @params.url <-- url of the api used in the tests
   @params.email <-- the user email that you want login
   @params.password <-- the password of the user that you want login
 */
 describe('To-do list main page', function() {
-  var url = 'http://localhost:8080/#!/todos';
+  browser.params.urlApi = browser.params.urlApi || 'http://localhost:8080';
+  var url = browser.params.urlApi+'/#!/todos';
   var descriptionText = "new todo";
   var addButtonText = 'ADICIONAR';
   //cache
