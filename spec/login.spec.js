@@ -1,3 +1,7 @@
+/*
+  @params.email <-- the user email that you want login
+  @params.password <-- the password of the user that you want login
+*/
 describe('To-do list login page', function() {
   var url = 'http://localhost:8080';
   beforeEach(function(){
