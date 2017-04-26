@@ -38,8 +38,8 @@ class LoginCtrl {
         'Content-Type': 'application/json'
       },
       data: {
-        email: this.email,
-        password: this.password
+        email: this.$scope.email,
+        password: this.$scope.password
       }
     }).then(function successCallback(response) {
         this.Auth.setToken(response.data.token);
@@ -53,7 +53,7 @@ class LoginCtrl {
         end(response);
       }.bind(this));
 
-    if(Config.debug) console.log(this.email, this.password);
+    if(Config.debug) console.log(this.$scope.email, this.$scope.password);
   }
 }
 
