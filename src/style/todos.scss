@@ -40,12 +40,11 @@
       }
 
       .right-bar{
+        $padding: 2px;
         text-align: right;
-        flex: 1 0 auto;
-
-        @include sm{
-          flex: 1 1 auto;
-        }
+        flex: 1 0 38px + 2 * $padding;
+        padding-left: $padding;
+        padding-right: $padding;
 
         > .item{
           cursor: pointer;
